@@ -6,7 +6,7 @@ interface ClientThemeProviderProps {
 }
 
 export default function ClientThemeProvider({ children }: ClientThemeProviderProps) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [, setIsDarkMode] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {

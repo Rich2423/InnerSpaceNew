@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 
 function getProfileStats() {
@@ -248,12 +249,12 @@ export default function ProfileSection() {
             </ul>
           </div>
           <div className="mt-6">
-            <a 
+            <Link 
               href="/" 
               className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
             >
               Go to Sign In
-            </a>
+            </Link>
           </div>
         </div>
       </div>

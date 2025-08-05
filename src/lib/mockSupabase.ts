@@ -94,7 +94,7 @@ export const mockSupabase = {
       
       return { error: null };
     },
-    signInWithOAuth: async ({ provider, options }: any) => {
+    signInWithOAuth: async ({ provider }: any) => {
       // Mock OAuth sign-in
       if (provider === 'google') {
         const user = {

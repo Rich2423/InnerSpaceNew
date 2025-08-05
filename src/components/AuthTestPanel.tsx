@@ -16,7 +16,7 @@ export default function AuthTestPanel() {
       if (error) {
         setError(error.message);
       }
-    } catch (err) {
+    } catch {
       setError('Google sign-in failed');
     } finally {
       setLoading(false);
