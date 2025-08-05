@@ -290,6 +290,9 @@ export const auth = {
     return await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
+      },
     })
   },
 

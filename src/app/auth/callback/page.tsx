@@ -8,20 +8,58 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const handleAuthCallback = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error('Auth callback error:', error);
-        router.push('/?error=auth_failed');
-        return;
-      }
+      try {
+        // Handle the auth callback
+        const { data, error } = await supabase.auth.getSession();
+        
+        console.log('Auth callback - Session data:', data);
+        console.log('Auth callback - Error:', error);
+        
+        if (error) {
+          console.error('Auth callback error:', error);
+          router.push('/?error=auth_failed');
+          return;
+        }
 
-      if (data.session) {
-        // Successfully authenticated, redirect to home
-        router.push('/');
-      } else {
-        // No session found, redirect to home
-        router.push('/');
+        if (data.session) {
+          console.log('Auth callback - User authenticated successfully');
+          // Successfully authenticated, redirect to home
+          router.push('/?success=email_confirmed');
+        } else {
+          console.log('Auth callback - No session found, checking for email confirmation');
+          // Check if this is an email confirmation
+          const urlParams = new URLSearchParams(window.location.search);
+          const accessToken = urlParams.get('access_token');
+          const refreshToken = urlParams.get('refresh_token');
+          
+          if (accessToken && refreshToken) {
+            console.log('Auth callback - Setting session from URL params');
+            const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken,
+            });
+            
+            if (sessionError) {
+              console.error('Auth callback - Session error:', sessionError);
+              router.push('/?error=session_failed');
+              return;
+            }
+            
+            if (sessionData.session) {
+              console.log('Auth callback - Session set successfully');
+              router.push('/?success=email_confirmed');
+            } else {
+              console.log('Auth callback - No session after setting tokens');
+              router.push('/?error=no_session');
+            }
+          } else {
+            console.log('Auth callback - No tokens in URL, redirecting to home');
+            router.push('/');
+          }
+        }
+      } catch (err) {
+        console.error('Auth callback - Unexpected error:', err);
+        router.push('/?error=unexpected');
       }
     };
 

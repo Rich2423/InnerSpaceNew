@@ -71,6 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         data: {
           username,
         },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
     return { error };

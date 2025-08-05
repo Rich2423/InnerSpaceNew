@@ -12,6 +12,30 @@ import { useAuth } from '../contexts/AuthContext';
 export default function Home() {
   const { user, loading } = useAuth();
   const [showAuthModal, setShowAuthModal] = React.useState(false);
+  const [authMessage, setAuthMessage] = React.useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  // Handle URL parameters for auth messages
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const error = urlParams.get('error');
+    
+    if (success === 'email_confirmed') {
+      setAuthMessage({ type: 'success', text: 'Email confirmed successfully! Welcome to InnerSpace!' });
+      // Clear the URL parameter
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (error) {
+      let errorText = 'Authentication failed. Please try again.';
+      if (error === 'auth_failed') errorText = 'Authentication failed. Please try again.';
+      else if (error === 'session_failed') errorText = 'Session setup failed. Please sign in again.';
+      else if (error === 'no_session') errorText = 'No active session. Please sign in again.';
+      else if (error === 'unexpected') errorText = 'An unexpected error occurred. Please try again.';
+      
+      setAuthMessage({ type: 'error', text: errorText });
+      // Clear the URL parameter
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -84,6 +108,17 @@ export default function Home() {
 
       {/* Header */}
       <div className="text-center py-8 px-4">
+        {/* Auth Message */}
+        {authMessage && (
+          <div className={`max-w-md mx-auto mb-6 p-4 rounded-lg ${
+            authMessage.type === 'success' 
+              ? 'bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-700 dark:text-green-300'
+              : 'bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-700 dark:text-red-300'
+          }`}>
+            {authMessage.text}
+          </div>
+        )}
+        
         <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
           {user ? `Welcome back, ${user.user_metadata?.username || 'friend'}!` : 'Welcome to InnerSpace'}
         </h1>
