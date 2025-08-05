@@ -64,7 +64,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, username: string) => {
-    const { error } = await supabase.auth.signUp({
+    console.log('🔍 Starting signup process...');
+    console.log('🔍 Email:', email);
+    console.log('🔍 Username:', username);
+    console.log('🔍 Redirect URL:', `${window.location.origin}/auth/callback`);
+    
+    const signUpConfig = {
       email,
       password,
       options: {
@@ -73,8 +78,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
-    });
-    return { error };
+    };
+    
+    console.log('🔍 Signup config:', signUpConfig);
+    
+    const { data, error } = await supabase.auth.signUp(signUpConfig);
+    
+    console.log('🔍 Signup response:', { data, error });
+    
+    if (error) {
+      console.error('❌ Signup error:', error);
+      return { error };
+    } else {
+      console.log('✅ Signup successful, email sent');
+      console.log('🔍 User data:', data.user);
+      console.log('🔍 Session data:', data.session);
+      return { error: null };
+    }
   };
 
   const signInWithGoogle = async () => {

@@ -38,7 +38,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         if (error) {
           setError(error.message);
         } else {
-          setSuccess('Account created! Please check your email to verify your account.');
+          setSuccess('Account created! Please check your email (including spam folder) to verify your account. Click the link in the email to complete your signup.');
         }
       }
     } catch {
