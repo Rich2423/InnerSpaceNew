@@ -66,10 +66,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       const { error } = await signInWithGoogle();
       if (error) {
         console.error('AuthModal: Google sign-in error:', error);
-        setError(error.message || 'Google sign-in failed. Please try again.');
+        setError('Google sign-in failed. Please check your internet connection and try again.');
       } else {
         console.log('AuthModal: Google sign-in initiated successfully');
-        setSuccess('Redirecting to Google...');
+        setSuccess('Redirecting to Google for authentication...');
+        // Don't close modal immediately, let the redirect happen
       }
     } catch (err) {
       console.error('AuthModal: Unexpected error during Google sign-in:', err);
