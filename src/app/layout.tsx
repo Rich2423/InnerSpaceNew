@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     description: 'Your private space to reflect, journal, and grow with AI-powered insights',
     images: ['/icons/icon-512x512.png'],
   },
-  manifest: '/api/manifest',
+  manifest: '/manifest',
   themeColor: '#8b5cf6',
   viewport: {
     width: 'device-width',
