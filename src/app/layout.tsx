@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import { AuthProvider } from '../contexts/AuthContext';
 import ClientThemeProvider from '../components/ClientThemeProvider';
 import Navigation from '../components/Navigation';
-import PWAInstaller from '../components/PWAInstaller';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -100,7 +100,6 @@ export default function RootLayout({
           <ClientThemeProvider>
             <Navigation />
             {children}
-            <PWAInstaller />
           </ClientThemeProvider>
         </AuthProvider>
       </body>
