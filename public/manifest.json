@@ -1,7 +1,7 @@
 {
   "name": "InnerSpace - Your Personal Reflection App",
   "short_name": "InnerSpace",
-  "description": "Your private space to reflect, journal, and grow with AI-powered insights",
+  "description": "Your private space to reflect, journal, and grow with AI-powered insights - Updated for PWA",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1f2937",
