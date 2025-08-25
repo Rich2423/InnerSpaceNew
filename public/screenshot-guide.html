@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerSpace App Store Screenshot Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .screenshot-section {
+            background: #2d2d2d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .device-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .device {
+            background: #3d3d3d;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .device h3 {
+            color: #8b5cf6;
+            margin-top: 0;
+        }
+        .page-list {
+            background: #3d3d3d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .page-list h3 {
+            color: #ec4899;
+            margin-top: 0;
+        }
+        .page-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .page-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #4d4d4d;
+        }
+        .page-list li:last-child {
+            border-bottom: none;
+        }
+        .highlight {
+            background: #8b5cf6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .tip {
+            background: #ec4899;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 InnerSpace App Store Screenshot Guide</h1>
+    
+    <div class="screenshot-section">
+        <h2>🎯 Required Screenshots</h2>
+        <p>Create screenshots for these device sizes and orientations:</p>
+        
+        <div class="device-specs">
+            <div class="device">
+                <h3>📱 iPhone Screenshots</h3>
+                <ul>
+                    <li><strong>iPhone 6.7" Display:</strong> 1290 x 2796 px</li>
+                    <li><strong>iPhone 6.5" Display:</strong> 1242 x 2688 px</li>
+                    <li><strong>iPhone 5.5" Display:</strong> 1242 x 2208 px</li>
+                    <li><strong>iPhone 4.7" Display:</strong> 750 x 1334 px</li>
+                </ul>
+            </div>
+            
+            <div class="device">
+                <h3>📱 Android Screenshots</h3>
+                <ul>
+                    <li><strong>Phone:</strong> 1080 x 1920 px</li>
+                    <li><strong>7" Tablet:</strong> 1200 x 1920 px</li>
+                    <li><strong>10" Tablet:</strong> 1920 x 1200 px</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="screenshot-section">
+        <h2>📸 Screenshot Content Strategy</h2>
+        
+        <div class="page-list">
+            <h3>🎨 Key Pages to Screenshot</h3>
+            <ul>
+                <li><span class="highlight">Dashboard</span> - Show the main interface with check-in and writing sections</li>
+                <li><span class="highlight">Journal Page</span> - Display the journal writing interface</li>
+                <li><span class="highlight">Sage Chat</span> - Show the AI conversation interface</li>
+                <li><span class="highlight">Profile/Progress</span> - Display user statistics and progress</li>
+                <li><span class="highlight">Wellness Center</span> - Show affirmations and resources</li>
+            </ul>
+        </div>
+        
+        <div class="tip">
+            <strong>💡 Pro Tips:</strong>
+            <ul>
+                <li>Use the <strong>dark mode</strong> theme for all screenshots</li>
+                <li>Show <strong>real content</strong> (not placeholder text)</li>
+                <li>Highlight the <strong>PWA install prompt</strong> in one screenshot</li>
+                <li>Include <strong>user interaction states</strong> (buttons pressed, forms filled)</li>
+                <li>Show <strong>different moods</strong> selected in check-in</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="screenshot-section">
+        <h2>🛠️ How to Take Screenshots</h2>
+        
+        <h3>Method 1: Browser DevTools</h3>
+        <ol>
+            <li>Open your app at <code>localhost:3000</code></li>
+            <li>Press <strong>F12</strong> to open DevTools</li>
+            <li>Click the <strong>device toggle</strong> button (📱 icon)</li>
+            <li>Select device size from dropdown</li>
+            <li>Navigate to each page and take screenshots</li>
+            <li>Use <strong>Ctrl+Shift+I</strong> (Windows) or <strong>Cmd+Shift+I</strong> (Mac) for full page screenshots</li>
+        </ol>
+        
+        <h3>Method 2: Browser Extensions</h3>
+        <ul>
+            <li><strong>Full Page Screen Capture</strong> (Chrome extension)</li>
+            <li><strong>Nimbus Screenshot</strong> (Chrome extension)</li>
+            <li><strong>FireShot</strong> (Firefox extension)</li>
+        </ul>
+        
+        <h3>Method 3: Online Tools</h3>
+        <ul>
+            <li><strong>BrowserStack</strong> - Test on real devices</li>
+            <li><strong>LambdaTest</strong> - Cross-browser testing</li>
+            <li><strong>Responsively</strong> - Multiple device sizes at once</li>
+        </ul>
+    </div>
+    
+    <div class="screenshot-section">
+        <h2>📋 Screenshot Checklist</h2>
+        
+        <div class="page-list">
+            <h3>✅ Before Taking Screenshots</h3>
+            <ul>
+                <li>✅ App loads without errors</li>
+                <li>✅ Dark mode is active</li>
+                <li>✅ PWA icons are working</li>
+                <li>✅ All features are functional</li>
+                <li>✅ Add some sample data (check-ins, journal entries)</li>
+            </ul>
+        </div>
+        
+        <div class="page-list">
+            <h3>📸 Screenshots to Take</h3>
+            <ul>
+                <li>📱 <strong>Dashboard</strong> - Main page with check-in and writing</li>
+                <li>📱 <strong>Journal</strong> - Writing interface with Sage help</li>
+                <li>📱 <strong>Sage Chat</strong> - AI conversation interface</li>
+                <li>📱 <strong>Profile</strong> - User stats and progress</li>
+                <li>📱 <strong>Wellness</strong> - Affirmations and resources</li>
+                <li>📱 <strong>PWA Install</strong> - Show install prompt</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="screenshot-section">
+        <h2>🎨 Screenshot Enhancement Tips</h2>
+        
+        <div class="tip">
+            <strong>🎯 Content Strategy:</strong>
+            <ul>
+                <li>Show <strong>real user scenarios</strong> (daily check-in, journal writing)</li>
+                <li>Highlight <strong>key features</strong> (Sage AI, mood tracking)</li>
+                <li>Demonstrate <strong>ease of use</strong> (clean interface, intuitive design)</li>
+                <li>Show <strong>personalization</strong> (user progress, statistics)</li>
+            </ul>
+        </div>
+        
+        <div class="tip">
+            <strong>🎨 Visual Tips:</strong>
+            <ul>
+                <li>Use <strong>consistent lighting</strong> and contrast</li>
+                <li>Ensure <strong>text is readable</strong> at small sizes</li>
+                <li>Show <strong>interactive elements</strong> (buttons, forms)</li>
+                <li>Include <strong>brand colors</strong> (purple/pink gradient)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="screenshot-section">
+        <h2>📤 Next Steps</h2>
+        <ol>
+            <li><strong>Take screenshots</strong> of all key pages</li>
+            <li><strong>Resize images</strong> to required dimensions</li>
+            <li><strong>Add text overlays</strong> for promotional screenshots</li>
+            <li><strong>Create app store descriptions</strong></li>
+            <li><strong>Prepare for submission</strong></li>
+        </ol>
+    </div>
+</body>
+</html> 

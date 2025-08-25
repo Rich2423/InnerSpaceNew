@@ -1,7 +1,7 @@
 {
   "name": "InnerSpace - Your Personal Reflection App",
   "short_name": "InnerSpace",
-  "description": "Your private space to reflect, journal, and grow with AI-powered insights - Updated for PWA",
+  "description": "Your private space to reflect, journal, and grow with AI-powered insights",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1f2937",
@@ -59,58 +59,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/screenshots/mobile-1.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Daily Check-in",
-      "short_name": "Check-in",
-      "description": "Start your daily mood check-in",
-      "url": "/?shortcut=checkin",
-      "icons": [
-        {
-          "src": "/icons/checkin-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Sage Chat",
-      "short_name": "Sage",
-      "description": "Talk to Sage AI for insights",
-      "url": "/sage?shortcut=sage",
-      "icons": [
-        {
-          "src": "/icons/sage-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Journal",
-      "short_name": "Journal",
-      "description": "Write in your personal journal",
-      "url": "/journal?shortcut=journal",
-      "icons": [
-        {
-          "src": "/icons/journal-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
     }
   ]
 } 

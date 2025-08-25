@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerSpace Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #7c3aed;
+        }
+        .download-all {
+            background: #ec4899;
+            font-size: 16px;
+            padding: 15px 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 InnerSpace Icon Generator</h1>
+    <p>This tool generates all required PWA icons for InnerSpace.</p>
+    
+    <div id="icon-previews"></div>
+    
+    <div style="margin-top: 30px;">
+        <button class="download-all" onclick="downloadAllIcons()">Download All Icons</button>
+        <button onclick="generateIcons()">Regenerate Icons</button>
+    </div>
+
+    <script>
+        const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            const center = size / 2;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#8b5cf6');
+            gradient.addColorStop(1, '#ec4899');
+            
+            // Draw background circle
+            ctx.beginPath();
+            ctx.arc(center, center, size * 0.45, 0, 2 * Math.PI);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Draw white border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.015;
+            ctx.stroke();
+            
+            // Draw brain icon
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = 0.9;
+            
+            // Brain hemispheres
+            const brainScale = size * 0.15;
+            const brainY = center - size * 0.05;
+            
+            // Left hemisphere
+            ctx.beginPath();
+            ctx.ellipse(center - brainScale * 0.8, brainY, brainScale * 0.6, brainScale * 0.4, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Right hemisphere
+            ctx.beginPath();
+            ctx.ellipse(center + brainScale * 0.8, brainY, brainScale * 0.6, brainScale * 0.4, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Brain center
+            ctx.beginPath();
+            ctx.ellipse(center, brainY, brainScale * 0.4, brainScale * 0.25, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Brain details
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#8b5cf6';
+            ctx.beginPath();
+            ctx.arc(center - brainScale * 0.3, brainY - brainScale * 0.2, brainScale * 0.08, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(center + brainScale * 0.3, brainY - brainScale * 0.2, brainScale * 0.08, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = '#ec4899';
+            ctx.beginPath();
+            ctx.arc(center - brainScale * 0.2, brainY + brainScale * 0.1, brainScale * 0.06, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(center + brainScale * 0.2, brainY + brainScale * 0.1, brainScale * 0.06, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Center dot
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(center, brainY - brainScale * 0.1, brainScale * 0.04, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Add text for larger icons
+            if (size >= 192) {
+                ctx.fillStyle = '#ffffff';
+                ctx.font = `bold ${size * 0.045}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText('InnerSpace', center, center + size * 0.32);
+            }
+        }
+        
+        function generateIcons() {
+            const container = document.getElementById('icon-previews');
+            container.innerHTML = '';
+            
+            iconSizes.forEach(size => {
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                canvas.id = `icon-${size}`;
+                
+                const label = document.createElement('div');
+                label.textContent = `${size}x${size}`;
+                label.style.marginTop = '5px';
+                
+                div.appendChild(canvas);
+                div.appendChild(label);
+                container.appendChild(div);
+                
+                drawIcon(canvas, size);
+            });
+        }
+        
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        function downloadAllIcons() {
+            iconSizes.forEach(size => {
+                const canvas = document.getElementById(`icon-${size}`);
+                if (canvas) {
+                    downloadCanvas(canvas, `icon-${size}x${size}.png`);
+                }
+            });
+        }
+        
+        // Generate icons on page load
+        window.onload = generateIcons;
+    </script>
+</body>
+</html> 

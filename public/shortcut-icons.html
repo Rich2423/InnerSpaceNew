@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerSpace Shortcut Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #7c3aed;
+        }
+        .download-all {
+            background: #ec4899;
+            font-size: 16px;
+            padding: 15px 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 InnerSpace Shortcut Icon Generator</h1>
+    <p>Generate shortcut icons for Daily Check-in, Sage, and Journal.</p>
+    
+    <div id="icon-previews"></div>
+    
+    <div style="margin-top: 30px;">
+        <button class="download-all" onclick="downloadAllIcons()">Download All Shortcut Icons</button>
+        <button onclick="generateIcons()">Regenerate Icons</button>
+    </div>
+
+    <script>
+        const shortcuts = [
+            { name: 'checkin', emoji: '📅', color: '#3b82f6' },
+            { name: 'sage', emoji: '🧠', color: '#8b5cf6' },
+            { name: 'journal', emoji: '📝', color: '#ec4899' }
+        ];
+        const size = 96;
+        
+        function drawShortcutIcon(canvas, shortcut) {
+            const ctx = canvas.getContext('2d');
+            const center = size / 2;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, shortcut.color);
+            gradient.addColorStop(1, shortcut.color + '80');
+            
+            // Draw background circle
+            ctx.beginPath();
+            ctx.arc(center, center, size * 0.4, 0, 2 * Math.PI);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Draw white border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.02;
+            ctx.stroke();
+            
+            // Draw emoji
+            ctx.font = `${size * 0.4}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(shortcut.emoji, center, center);
+            
+            // Add subtle shadow
+            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+            ctx.shadowBlur = size * 0.05;
+            ctx.shadowOffsetX = size * 0.02;
+            ctx.shadowOffsetY = size * 0.02;
+        }
+        
+        function generateIcons() {
+            const container = document.getElementById('icon-previews');
+            container.innerHTML = '';
+            
+            shortcuts.forEach(shortcut => {
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                canvas.id = `shortcut-${shortcut.name}`;
+                
+                const label = document.createElement('div');
+                label.textContent = `${shortcut.name}-${size}x${size}`;
+                label.style.marginTop = '5px';
+                
+                div.appendChild(canvas);
+                div.appendChild(label);
+                container.appendChild(div);
+                
+                drawShortcutIcon(canvas, shortcut);
+            });
+        }
+        
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        function downloadAllIcons() {
+            shortcuts.forEach(shortcut => {
+                const canvas = document.getElementById(`shortcut-${shortcut.name}`);
+                if (canvas) {
+                    downloadCanvas(canvas, `${shortcut.name}-${size}x${size}.png`);
+                }
+            });
+        }
+        
+        // Generate icons on page load
+        window.onload = generateIcons;
+    </script>
+</body>
+</html> 
