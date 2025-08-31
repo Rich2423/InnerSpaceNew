@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import Link from 'next/link';
 
 export default function TestPage() {
   return (
@@ -15,9 +14,9 @@ export default function TestPage() {
           <li>✅ No loading issues</li>
         </ul>
       </div>
-      <a href="/" className="inline-block mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+      <Link href="/" className="inline-block mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
         Go to Main App
-      </a>
+      </Link>
     </div>
   );
 } 
