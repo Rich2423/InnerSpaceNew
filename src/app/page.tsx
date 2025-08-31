@@ -178,6 +178,7 @@ export default function Home() {
       </div>
 
       {/* Auth Modal */}
+      {/* Updated: Google OAuth removed, Supabase connection restored */}
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       
     </main>
