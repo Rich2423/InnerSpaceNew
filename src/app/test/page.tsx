@@ -18,7 +18,20 @@ export default function TestPage() {
       const testSession = supabase.auth.getSession();
       setSupabaseInfo({
         clientType: supabase.auth ? 'Real Supabase' : 'Mock Supabase',
-        session: testSession ? 'Available' : 'Not Available'
+        session: 'Checking...'
+      });
+      
+      // Handle the Promise properly
+      testSession.then(({ data }: any) => {
+        setSupabaseInfo((prev: any) => ({
+          ...prev,
+          session: data.session ? 'Available' : 'Not Available'
+        }));
+      }).catch((error: any) => {
+        setSupabaseInfo((prev: any) => ({
+          ...prev,
+          session: 'Error: ' + (error instanceof Error ? error.message : 'Unknown error')
+        }));
       });
     } catch (error) {
       setSupabaseInfo({
