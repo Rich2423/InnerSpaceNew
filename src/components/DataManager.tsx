@@ -265,7 +265,13 @@ export default function DataManager() {
               value={importData}
               onChange={(e) => setImportData(e.target.value)}
               placeholder="Paste your exported JSON data here..."
-              className="w-full h-32 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+              className="w-full h-32 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none text-visible-fix journal-input"
+              style={{
+                backgroundColor: '#ffffff',
+                color: '#1f2937',
+                WebkitTextFillColor: '#1f2937',
+                opacity: 1
+              }}
             />
           </div>
           

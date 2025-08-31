@@ -339,8 +339,14 @@ export default function ProfileSection() {
                       value={favoriteQuote}
                       onChange={(e) => setFavoriteQuote(e.target.value)}
                       placeholder="Enter your favorite quote or song lyrics..."
-                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
+                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-visible-fix journal-input"
                       rows={3}
+                      style={{
+                        backgroundColor: '#ffffff',
+                        color: '#1f2937',
+                        WebkitTextFillColor: '#1f2937',
+                        opacity: 1
+                      }}
                     />
                     <div className="flex gap-2">
                       <button 

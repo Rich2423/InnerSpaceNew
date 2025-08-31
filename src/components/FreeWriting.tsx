@@ -58,9 +58,9 @@ export default function FreeWriting() {
       {/* Header with User Context */}
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800">Write Freely</h3>
+          <h3 className="text-lg font-semibold text-white">Write Freely</h3>
           {user && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-300">
               Writing as {user.user_metadata?.username || user.email?.split('@')[0] || 'Anonymous'}
             </p>
           )}
@@ -86,10 +86,16 @@ export default function FreeWriting() {
       {/* Writing Area */}
       <div className="relative">
         <textarea
-          className="w-full min-h-[200px] rounded-lg border border-gray-600 bg-gray-800 p-4 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none text-white placeholder-gray-300 writing-content"
+          className="w-full min-h-[200px] rounded-lg border border-gray-600 bg-gray-800 p-4 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none text-white placeholder-gray-300 writing-content text-visible-fix journal-input"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={prompt}
+          style={{
+            backgroundColor: '#ffffff',
+            color: '#1f2937',
+            WebkitTextFillColor: '#1f2937',
+            opacity: 1
+          }}
         />
         
         {/* Word Count */}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { signInWithPassword, signUpWithPassword } from '../lib/supabase';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -8,177 +8,259 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
-  const [mode, setMode] = useState<'login' | 'signup' | 'anonymous'>('login');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    username: ''
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const { signIn, signUp } = useAuth();
+  if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setSuccess('');
+    setSuccessMessage('');
 
     try {
-      if (mode === 'login') {
-        const { error } = await signIn(email, password);
-        if (error) {
-          setError(error.message);
+      if (isSignUp) {
+        const result = await signUpWithPassword(
+          formData.email, 
+          formData.password, 
+          formData.username
+        );
+        
+        if (result.user && !result.session) {
+          setSuccessMessage('Please check your email to confirm your account before signing in.');
         } else {
-          setSuccess('Welcome back!');
-          setTimeout(onClose, 1000);
+          setSuccessMessage('Account created successfully!');
+          setTimeout(() => {
+            onClose();
+            window.location.reload();
+          }, 1500);
         }
-      } else if (mode === 'signup') {
-        const { error } = await signUp(email, password, username);
-        if (error) {
-          setError(error.message);
-        } else {
-          setSuccess('Account created! Please check your email (including spam folder) to verify your account. Click the link in the email to complete your signup.');
+      } else {
+        const result = await signInWithPassword(formData.email, formData.password);
+        if (result.user) {
+          setSuccessMessage('Signed in successfully!');
+          setTimeout(() => {
+            onClose();
+            window.location.reload();
+          }, 1000);
         }
       }
-    } catch {
-      setError('Something went wrong. Please try again.');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const resetForm = () => {
-    setEmail('');
-    setPassword('');
-    setUsername('');
-    setError('');
-    setSuccess('');
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
-
-
-  if (!isOpen) return null;
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp);
+    setError('');
+    setSuccessMessage('');
+    setFormData({ email: '', password: '', username: '' });
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Welcome to InnerSpace</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl"
-            type="button"
-          >
-            ✕
-          </button>
+      <div className="bg-gray-800 rounded-lg max-w-md w-full p-6 relative border border-gray-700">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-xl"
+          type="button"
+        >
+          ✕
+        </button>
+
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Welcome to InnerSpace
+          </h2>
+          <div className="flex justify-center">
+            <button
+              onClick={() => !isSignUp && toggleMode()}
+              className={`px-4 py-2 rounded-l-lg font-medium transition-colors ${
+                !isSignUp 
+                  ? 'bg-purple-600 text-white' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+              type="button"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => isSignUp && toggleMode()}
+              className={`px-4 py-2 rounded-r-lg font-medium transition-colors ${
+                isSignUp 
+                  ? 'bg-purple-600 text-white' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+              type="button"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
 
-        {/* Mode Tabs */}
-        <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
-          <button
-            onClick={() => { setMode('login'); resetForm(); }}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              mode === 'login' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-600'
-            }`}
-            type="button"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={() => { setMode('signup'); resetForm(); }}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              mode === 'signup' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-600'
-            }`}
-            type="button"
-          >
-            Sign Up
-          </button>
-        </div>
+        {/* Success Message */}
+        {successMessage && (
+          <div className="mb-4 p-3 bg-green-900 text-green-300 rounded-lg text-sm border border-green-700">
+            {successMessage}
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-900 text-red-300 rounded-lg text-sm border border-red-700">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {(mode === 'login' || mode === 'signup') && (
-            <>
-              {mode === 'signup' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    placeholder="Choose a username"
-                    required
-                  />
-                </div>
-              )}
+          {/* Email Field */}
+          <div>
+            <label 
+              htmlFor="email" 
+              className="block text-sm font-medium text-white mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              className="w-full px-4 py-3 border border-gray-600 rounded-lg 
+                         bg-gray-700 text-white placeholder-gray-400
+                         focus:ring-2 focus:ring-purple-500 focus:border-purple-500 
+                         transition-colors duration-200"
+              placeholder="Enter your email"
+            />
+          </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors disabled:opacity-50"
+          {/* Username Field (Sign Up Only) */}
+          {isSignUp && (
+            <div>
+              <label 
+                htmlFor="username" 
+                className="block text-sm font-medium text-white mb-2"
               >
-                {loading ? 'Processing...' : mode === 'login' ? 'Sign In' : 'Create Account'}
-              </button>
-
-
-            </>
+                Username (Optional)
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-600 rounded-lg 
+                           bg-gray-700 text-white placeholder-gray-400
+                           focus:ring-2 focus:ring-purple-500 focus:border-purple-500 
+                           transition-colors duration-200"
+                placeholder="Choose a username"
+              />
+            </div>
           )}
+
+          {/* Password Field */}
+          <div>
+            <label 
+              htmlFor="password" 
+              className="block text-sm font-medium text-white mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              minLength={6}
+              className="w-full px-4 py-3 border border-gray-600 rounded-lg 
+                         bg-gray-700 text-white placeholder-gray-400
+                         focus:ring-2 focus:ring-purple-500 focus:border-purple-500 
+                         transition-colors duration-200"
+              placeholder="Enter your password"
+            />
+            {isSignUp && (
+              <p className="mt-1 text-xs text-gray-400">
+                Password must be at least 6 characters long
+              </p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 
+                       disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed
+                       text-white font-medium py-3 px-4 rounded-lg 
+                       transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100
+                       focus:ring-4 focus:ring-purple-300"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
+                {isSignUp ? 'Creating Account...' : 'Signing In...'}
+              </div>
+            ) : (
+              isSignUp ? 'Create Account' : 'Sign In'
+            )}
+          </button>
         </form>
 
-        {/* Messages */}
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-800">{error}</p>
-          </div>
-        )}
+        {/* Toggle between Sign In and Sign Up */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={toggleMode}
+            className="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors duration-200"
+            type="button"
+          >
+            {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+          </button>
+        </div>
 
-        {success && (
-          <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-sm text-green-800">{success}</p>
+        {/* Privacy Notice */}
+        <div className="mt-6 pt-4 border-t border-gray-700">
+          <div className="text-xs text-gray-400 space-y-1">
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-green-500 rounded-full mr-2 flex-shrink-0"></div>
+              <span>Your data is encrypted and secure</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mr-2 flex-shrink-0"></div>
+              <span>You can delete your account anytime</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-purple-500 rounded-full mr-2 flex-shrink-0"></div>
+              <span>We never share your personal information</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-2 h-2 bg-orange-500 rounded-full mr-2 flex-shrink-0"></div>
+              <span>Your journal entries are private and secure</span>
+            </div>
           </div>
-        )}
-
-        {/* Info */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <h4 className="text-sm font-medium text-blue-800 mb-2">About Your Privacy</h4>
-          <ul className="text-xs text-blue-700 space-y-1">
-            <li>• Your data is encrypted and secure</li>
-            <li>• You can delete your account anytime</li>
-            <li>• We never share your personal information</li>
-            <li>• Your journal entries are private and secure</li>
-          </ul>
         </div>
       </div>
     </div>

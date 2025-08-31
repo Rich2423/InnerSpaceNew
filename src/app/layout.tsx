@@ -2,7 +2,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { AuthProvider } from '../contexts/AuthContext';
-import ClientThemeProvider from '../components/ClientThemeProvider';
 import Navigation from '../components/Navigation';
 
 
@@ -80,6 +79,10 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Force dark mode immediately
+              document.documentElement.classList.add('dark');
+              document.documentElement.style.colorScheme = 'dark';
+              
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
                   navigator.serviceWorker.register('/sw.js')
@@ -95,12 +98,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-900 text-white`}>
         <AuthProvider>
-          <ClientThemeProvider>
-            <Navigation />
-            {children}
-          </ClientThemeProvider>
+          <Navigation />
+          {children}
         </AuthProvider>
       </body>
     </html>

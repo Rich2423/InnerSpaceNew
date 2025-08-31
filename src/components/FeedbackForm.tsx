@@ -146,8 +146,14 @@ export default function FeedbackForm() {
                       : 'Please share your thoughts...'
                   }
                   rows={4}
-                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-visible-fix journal-input"
                   required
+                  style={{
+                    backgroundColor: '#ffffff',
+                    color: '#1f2937',
+                    WebkitTextFillColor: '#1f2937',
+                    opacity: 1
+                  }}
                 />
               </div>
 

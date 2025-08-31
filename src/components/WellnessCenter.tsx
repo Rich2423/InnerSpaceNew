@@ -377,9 +377,15 @@ export default function WellnessCenter() {
                   What's on your mind?
                 </label>
                 <textarea
-                  className="w-full rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none"
+                  className="w-full rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none text-visible-fix reflection-input"
                   rows={3}
                   placeholder="Share your thoughts..."
+                  style={{
+                    backgroundColor: '#ffffff',
+                    color: '#1f2937',
+                    WebkitTextFillColor: '#1f2937',
+                    opacity: 1
+                  }}
                 />
               </div>
             </div>

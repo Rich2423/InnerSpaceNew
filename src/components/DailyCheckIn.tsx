@@ -56,9 +56,9 @@ export default function DailyCheckIn() {
     <div className="space-y-6">
       {/* Header with User Context */}
       <div className="mb-4">
-        <h3 className="text-lg font-medium text-gray-700 mb-1">How are you feeling?</h3>
+        <h3 className="text-lg font-medium text-white mb-1">How are you feeling?</h3>
         {user && (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-300">
             Check-in for {user.user_metadata?.username || user.email?.split('@')[0] || 'Anonymous'}
           </p>
         )}
@@ -73,13 +73,13 @@ export default function DailyCheckIn() {
               className={`flex flex-col items-center p-4 rounded-xl border-2 transition-all ${
                 selectedMood === mood.label 
                   ? `${mood.color} scale-105` 
-                  : 'bg-white border-gray-200 hover:border-gray-300'
+                  : 'bg-gray-700 border-gray-600 hover:border-gray-500'
               }`}
               onClick={() => setSelectedMood(mood.label)}
               type="button"
             >
               <span className="text-3xl mb-2">{mood.emoji}</span>
-              <span className="text-sm font-medium text-gray-700">{mood.label}</span>
+              <span className="text-sm font-medium text-white">{mood.label}</span>
             </button>
           ))}
         </div>
@@ -87,13 +87,19 @@ export default function DailyCheckIn() {
 
       {/* Reflection */}
       <div>
-        <h3 className="text-lg font-medium text-gray-700 mb-3">Reflection</h3>
-        <p className="text-sm text-gray-600 mb-3 italic">"{question}"</p>
+        <h3 className="text-lg font-medium text-white mb-3">Reflection</h3>
+        <p className="text-sm text-gray-300 mb-3 italic">"{question}"</p>
         <textarea
-          className="w-full min-h-[80px] rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-none text-gray-800 placeholder-gray-500 writing-content"
+          className="w-full min-h-[80px] rounded-lg border border-gray-600 bg-gray-800 p-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none text-white placeholder-gray-300 writing-content text-visible-fix reflection-input"
           value={reflection}
           onChange={(e) => setReflection(e.target.value)}
           placeholder="Share your thoughts..."
+          style={{
+            backgroundColor: '#ffffff',
+            color: '#1f2937',
+            WebkitTextFillColor: '#1f2937',
+            opacity: 1
+          }}
         />
       </div>
 

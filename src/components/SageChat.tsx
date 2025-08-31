@@ -363,8 +363,14 @@ What authority figure or situation would you like to work on today?`;
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white text-visible-fix chat-input sage-input"
                 disabled={isLoading}
+                style={{
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937',
+                  WebkitTextFillColor: '#1f2937',
+                  opacity: 1
+                }}
               />
               <button
                 onClick={handleSendMessage}
