@@ -70,7 +70,7 @@ export default function FreeWriting() {
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             showSage 
               ? 'bg-purple-600 text-white' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              : 'bg-purple-500 text-white hover:bg-purple-600 border border-purple-400'
           }`}
           type="button"
         >
@@ -86,14 +86,14 @@ export default function FreeWriting() {
       {/* Writing Area */}
       <div className="relative">
         <textarea
-          className="w-full min-h-[200px] rounded-lg border border-gray-200 p-4 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none text-gray-800 placeholder-gray-400"
+          className="w-full min-h-[200px] rounded-lg border border-gray-600 bg-gray-800 p-4 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none text-white placeholder-gray-300 writing-content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={prompt}
         />
         
         {/* Word Count */}
-        <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+        <div className="absolute bottom-2 right-2 text-xs text-gray-500">
           {content.length} characters
         </div>
       </div>

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1a1a1a;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -12,10 +12,54 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Removed automatic dark mode preference to allow JavaScript control */
-
+/* Force dark mode styling */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Force dark mode classes */
+html, body {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Ensure proper dark mode styling for all elements */
+* {
+  color-scheme: dark;
+}
+
+/* Dark mode styling for form elements */
+textarea, input[type="text"], input[type="email"], input[type="password"] {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border-color: #404040 !important;
+}
+
+/* Dark mode styling for journal content */
+.journal-content, .writing-content {
+  color: #ffffff !important;
+  background-color: #2d2d2d !important;
+}
+
+/* Dark mode styling for cards and containers */
+.bg-white, .bg-gray-50, .bg-blue-50, .bg-purple-50, .bg-pink-50 {
+  background-color: #2d2d2d !important;
+}
+
+/* Dark mode text colors */
+.text-gray-800, .text-gray-900, .text-black {
+  color: #ffffff !important;
+}
+
+/* Dark mode styling for buttons */
+button, .btn {
+  color: inherit;
+}
+
+/* Override any light mode classes */
+.light, .light-mode {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
 }

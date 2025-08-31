@@ -18,6 +18,7 @@ export default function Navigation({ className = '' }: NavigationProps) {
     { href: '/wellness', label: 'Wellness', icon: '🧘' },
     { href: '/journal', label: 'Journal', icon: '📝' },
     { href: '/sage', label: 'Sage', icon: '🧠' },
+    { href: '/donations', label: 'Support Us', icon: '❤️' },
   ];
 
   return (

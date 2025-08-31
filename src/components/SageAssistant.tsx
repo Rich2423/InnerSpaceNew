@@ -9,7 +9,15 @@ const SAGE_PROMPTS = [
   "I'm dealing with stress...",
   "I want to practice gratitude...",
   "I need motivation...",
-  "I want to understand myself better..."
+  "I want to understand myself better...",
+  "I need advice on relationships...",
+  "I'm making an important decision...",
+  "I want to build confidence...",
+  "I'm dealing with change...",
+  "I need help with communication...",
+  "I want to work on my goals...",
+  "I'm feeling overwhelmed...",
+  "I want to process something that happened..."
 ];
 
 const SAGE_SUGGESTIONS = {
@@ -60,6 +68,54 @@ const SAGE_SUGGESTIONS = {
     "What patterns do you notice in your behavior?",
     "What values are most important to you?",
     "What would you like to change about yourself?"
+  ],
+  "I need advice on relationships...": [
+    "What's happening in this relationship that you'd like to work through?",
+    "How are you feeling about this relationship right now?",
+    "What would you like to change or improve?",
+    "What boundaries might be helpful to set?"
+  ],
+  "I'm making an important decision...": [
+    "What are the main factors you're considering?",
+    "What would be the best possible outcome?",
+    "What's your gut feeling about this decision?",
+    "What would help you feel more confident in your choice?"
+  ],
+  "I want to build confidence...": [
+    "What would help you feel more confident in this situation?",
+    "What evidence do you see of your strengths?",
+    "What small step could you take today?",
+    "How might you approach this differently with more confidence?"
+  ],
+  "I'm dealing with change...": [
+    "What kind of change are you experiencing?",
+    "How are you feeling about this change?",
+    "What would help you feel more comfortable with it?",
+    "What opportunities might this change bring?"
+  ],
+  "I need help with communication...": [
+    "What's the main message you want to convey?",
+    "Who do you need to communicate with?",
+    "What's the best way to approach this conversation?",
+    "How can you express your needs clearly?"
+  ],
+  "I want to work on my goals...": [
+    "What goal are you working toward?",
+    "What's one small step you could take today?",
+    "What obstacles are you facing?",
+    "What would success look like for you?"
+  ],
+  "I'm feeling overwhelmed...": [
+    "What's causing you to feel overwhelmed?",
+    "What would help you feel more in control?",
+    "What can you let go of or simplify?",
+    "What support do you need right now?"
+  ],
+  "I want to process something that happened...": [
+    "What happened that you'd like to process?",
+    "How are you feeling about it?",
+    "What would help you make sense of it?",
+    "What have you learned from this experience?"
   ]
 };
 
@@ -115,7 +171,7 @@ export default function SageAssistant({ onSuggestion }: { onSuggestion: (text: s
       {/* Sage Prompts */}
       <div className="mb-4">
         <h4 className="font-medium text-gray-800 dark:text-white mb-2">I need help with...</h4>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {SAGE_PROMPTS.map((prompt, index) => (
             <button
               key={index}

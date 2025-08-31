@@ -49,44 +49,56 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Navigation */}
-      <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+      <nav className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-xl font-bold text-gray-800 dark:text-white">
+            <Link href="/" className="text-xl font-bold text-white">
               InnerSpace
             </Link>
             <div className="flex items-center gap-6">
               <Link 
                 href="/journal" 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 Journal
               </Link>
               <Link 
+                href="/sage" 
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                Sage
+              </Link>
+              <Link 
                 href="/profile" 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 Profile
               </Link>
               <Link 
                 href="/progress" 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 Progress
               </Link>
               <Link 
                 href="/wellness" 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 Wellness
               </Link>
               <Link 
                 href="/data" 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 Data
+              </Link>
+              <Link 
+                href="/donations" 
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                Support Us
               </Link>
               
               {/* Auth Section */}
@@ -112,17 +124,17 @@ export default function Home() {
         {authMessage && (
           <div className={`max-w-md mx-auto mb-6 p-4 rounded-lg ${
             authMessage.type === 'success' 
-              ? 'bg-green-100 border border-green-400 text-green-700 dark:bg-green-900/20 dark:border-green-700 dark:text-green-300'
-              : 'bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-700 dark:text-red-300'
+              ? 'bg-green-100 border border-green-400 text-green-700'
+              : 'bg-red-100 border border-red-400 text-red-700'
           }`}>
             {authMessage.text}
           </div>
         )}
         
-        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+        <h1 className="text-4xl font-bold text-white mb-2">
           {user ? `Welcome back, ${user.user_metadata?.username || 'friend'}!` : 'Welcome to InnerSpace'}
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
+        <p className="text-lg text-gray-300">
           {user ? 'Your private space to reflect and grow' : 'Your private space to reflect and grow'}
         </p>
         {!user && (
@@ -139,22 +151,22 @@ export default function Home() {
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 pb-8">
         {/* Today's Check-In - Main Feature */}
-        <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 border border-gray-100 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Today's Check-In</h2>
+        <section className="bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 border border-gray-700">
+          <h2 className="text-2xl font-semibold text-white mb-4">Today's Check-In</h2>
           <DailyCheckIn />
         </section>
 
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Free Writing */}
-          <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Write Freely</h2>
+          <section className="bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-700">
+            <h2 className="text-2xl font-semibold text-white mb-4">Write Freely</h2>
             <FreeWriting />
           </section>
 
           {/* Your Story */}
-          <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Your Story</h2>
+          <section className="bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-700">
+            <h2 className="text-2xl font-semibold text-white mb-4">Your Story</h2>
             <YourStory />
           </section>
         </div>

@@ -1,46 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
-import { mockSupabase } from './mockSupabase'
 
-// Create Supabase client
-let supabase: any;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-if (typeof window === 'undefined') {
-  // Server-side rendering - use mock
-  console.log('Using mock Supabase (server-side)');
-  supabase = mockSupabase;
-} else {
-  // Client-side - use real Supabase if environment variables are available
-  console.log('Client-side Supabase setup:');
-  
-  // Try to access environment variables in different ways
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
-                     (typeof window !== 'undefined' ? (window as any).__NEXT_DATA__?.props?.supabaseUrl : null) ||
-                     'https://bwegsjtluxqnlployjlf.supabase.co';
-  
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
-                          (typeof window !== 'undefined' ? (window as any).__NEXT_DATA__?.props?.supabaseAnonKey : null) ||
-                          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3ZWdzanRsdXhxbmxwbG95amxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwMTEzNzcsImV4cCI6MjA2OTU4NzM3N30.P7ySsm6Wes9VdJJ14-n0sLTR3vVHEeI8sS2ofWKYZF8';
-  
-  console.log('URL:', supabaseUrl);
-  console.log('Key available:', !!supabaseAnonKey);
-  
-  if (supabaseUrl && supabaseAnonKey) {
-    try {
-      supabase = createClient(supabaseUrl, supabaseAnonKey);
-      console.log('✅ Real Supabase client created successfully');
-    } catch (error) {
-      console.warn('❌ Failed to create Supabase client, using mock:', error);
-      supabase = mockSupabase;
-    }
-  } else {
-    console.warn('❌ Supabase environment variables not set, using mock client');
-    console.warn('❌ URL missing:', !supabaseUrl);
-    console.warn('❌ Key missing:', !supabaseAnonKey);
-    supabase = mockSupabase;
-  }
-}
-
-export { supabase };
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Database types for TypeScript
 export interface Database {
@@ -126,7 +89,7 @@ export interface Database {
         Insert: {
           id?: string
           user_id: string
-          mood: number
+          mood?: number
           factors?: string[]
           activities?: string[]
           notes?: string
@@ -194,11 +157,11 @@ export interface Database {
         Insert: {
           id?: string
           user_id: string
-          mood: number
-          safety: number
-          stress: number
-          sleep: number
-          social: number
+          mood?: number
+          safety?: number
+          stress?: number
+          sleep?: number
+          social?: number
           notes?: string
           requires_follow_up?: boolean
           follow_up_action?: string
@@ -266,7 +229,7 @@ export interface Database {
           id?: string
           user_id: string
           content: string
-          auto_delete: string
+          auto_delete?: string
           expires_at?: string
           created_at?: string
         }
@@ -301,16 +264,6 @@ export const auth = {
     return await supabase.auth.signInWithPassword({
       email,
       password,
-    })
-  },
-
-  // Sign in with Google OAuth
-  signInWithGoogle: async () => {
-    return await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
-      },
     })
   },
 

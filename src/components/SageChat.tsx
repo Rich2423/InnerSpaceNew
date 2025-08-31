@@ -77,20 +77,65 @@ export default function SageChat() {
     setInputMessage('');
     setIsLoading(true);
 
-    // Simulate Sage response (replace with actual Sage integration)
+    // Enhanced Sage response with unlimited conversation capability
     setTimeout(() => {
       const sageResponse: Message = {
         id: (Date.now() + 1).toString(),
         type: 'sage',
-        content: generateSageResponse(inputMessage, selectedScenario),
+        content: generateEnhancedSageResponse(inputMessage, selectedScenario),
         timestamp: new Date()
       };
       setMessages(prev => [...prev, sageResponse]);
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   };
 
-  const generateSageResponse = (userMessage: string, scenario: Scenario | null): string => {
+  const generateEnhancedSageResponse = (userMessage: string, scenario: Scenario | null): string => {
+    // Enhanced response system with unlimited conversation capability
+    const userMessageLower = userMessage.toLowerCase();
+    
+    // Check for specific keywords and provide contextual responses
+    if (userMessageLower.includes('thank') || userMessageLower.includes('thanks')) {
+      return "You're very welcome! I'm here to support you on your journey. Is there anything else you'd like to explore or discuss?";
+    }
+    
+    if (userMessageLower.includes('help') || userMessageLower.includes('stuck')) {
+      return "I'm here to help! Let's break this down together. What specific aspect would you like to focus on? Sometimes talking through the details can help us find new perspectives.";
+    }
+    
+    if (userMessageLower.includes('feel') || userMessageLower.includes('emotion')) {
+      return "Your feelings are valid and important. Can you tell me more about what's behind these emotions? Understanding the root cause can help us work through them together.";
+    }
+    
+    if (userMessageLower.includes('stress') || userMessageLower.includes('anxiety')) {
+      return "Stress and anxiety can be really challenging. What's causing you the most concern right now? Sometimes identifying the source helps us find better ways to manage it.";
+    }
+    
+    if (userMessageLower.includes('relationship') || userMessageLower.includes('friend') || userMessageLower.includes('family')) {
+      return "Relationships can be complex and deeply personal. What's happening in this relationship that you'd like to work through? I'm here to help you explore your feelings and find clarity.";
+    }
+    
+    if (userMessageLower.includes('decision') || userMessageLower.includes('choice')) {
+      return "Making decisions can be overwhelming, especially when they're important. What are the main factors you're considering? Sometimes writing out the pros and cons can help clarify things.";
+    }
+    
+    if (userMessageLower.includes('future') || userMessageLower.includes('goal')) {
+      return "Thinking about the future can be both exciting and daunting. What are you hoping to achieve? Let's explore what steps might help you move toward your goals.";
+    }
+    
+    if (userMessageLower.includes('past') || userMessageLower.includes('memory')) {
+      return "Our past experiences shape who we are, but they don't have to define our future. What about this memory is important to you right now? How do you think it's influencing your current situation?";
+    }
+    
+    if (userMessageLower.includes('confidence') || userMessageLower.includes('self-esteem')) {
+      return "Building confidence is a journey, and it's okay to have ups and downs. What would help you feel more confident in this situation? Sometimes we're stronger than we realize.";
+    }
+    
+    if (userMessageLower.includes('change') || userMessageLower.includes('different')) {
+      return "Change can be challenging, even when it's positive. What kind of change are you thinking about? What's motivating you to consider this change?";
+    }
+    
+    // Scenario-specific responses
     if (scenario?.title === 'Authority Resolution') {
       const authorityResponses = [
         "I understand this involves someone in a position of authority. How do you feel about the power dynamic in this situation?",
@@ -106,8 +151,23 @@ export default function SageChat() {
       ];
       return authorityResponses[Math.floor(Math.random() * authorityResponses.length)];
     }
+    
+    if (scenario?.title === 'Relationship Communication') {
+      const relationshipResponses = [
+        "Communication in relationships takes practice and patience. What's the main message you want to convey?",
+        "It's important to express your feelings while also listening to the other person. How do you think they might be feeling?",
+        "Sometimes we need to take a step back and see things from the other person's perspective. What might their point of view be?",
+        "Healthy communication often involves finding the right time and place. What would be the best setting for this conversation?",
+        "It's okay to ask for what you need in a relationship. What would make you feel more supported or understood?",
+        "Remember that both people's feelings are valid. How can you express your needs while also being considerate of theirs?",
+        "Sometimes writing down your thoughts first can help clarify what you want to say. What are the key points you want to make?",
+        "It's natural to feel vulnerable when opening up. What would help you feel safer in this conversation?"
+      ];
+      return relationshipResponses[Math.floor(Math.random() * relationshipResponses.length)];
+    }
 
-    const generalResponses = [
+    // Enhanced general responses for unlimited conversation
+    const enhancedGeneralResponses = [
       "That's an interesting perspective. Can you tell me more about how you're feeling in this situation?",
       "I understand this might be challenging. What would be the ideal outcome you're hoping for?",
       "It sounds like you're dealing with some complex emotions. How do you think the other person might be feeling?",
@@ -115,10 +175,44 @@ export default function SageChat() {
       "I appreciate you sharing this with me. What steps do you think would help move this situation forward?",
       "That's a valid concern. How might you approach this differently if you had unlimited confidence?",
       "I can see this is important to you. What would success look like in this situation?",
-      "This is a common challenge many people face. What support do you think you need right now?"
+      "This is a common challenge many people face. What support do you think you need right now?",
+      "Your feelings are completely valid. What would help you feel more at peace with this situation?",
+      "Sometimes the hardest part is knowing where to start. What's one small step you could take today?",
+      "I hear you, and I want you to know that you're not alone in feeling this way. What would be most helpful for you right now?",
+      "It takes courage to explore these feelings. What do you think you might learn from this experience?",
+      "Everyone's journey is unique, and there's no right or wrong way to feel. What's your gut telling you about this situation?",
+      "Sometimes we need to give ourselves permission to feel what we're feeling. What would that look like for you?",
+      "You have more strength than you might realize. What evidence do you see of your resilience in this situation?"
     ];
 
-    return generalResponses[Math.floor(Math.random() * generalResponses.length)];
+    return enhancedGeneralResponses[Math.floor(Math.random() * enhancedGeneralResponses.length)];
+  };
+
+
+
+  const startFreeChat = () => {
+    setSelectedScenario(null);
+    
+    const welcomeMessage = `Hello! I'm Sage, your AI companion for unlimited conversation and support. 
+
+I'm here to listen, help you explore your thoughts and feelings, and support you on your journey. You can talk to me about:
+
+• Your day and how you're feeling
+• Challenges you're facing
+• Goals and aspirations
+• Relationships and social situations
+• Stress, anxiety, or difficult emotions
+• Anything else on your mind
+
+There are no limits to our conversation - I'm here for you. What would you like to talk about today?`;
+    
+    const message: Message = {
+      id: Date.now().toString(),
+      type: 'sage',
+      content: welcomeMessage,
+      timestamp: new Date()
+    };
+    setMessages([message]);
   };
 
   const startScenario = (scenario: Scenario) => {
@@ -155,9 +249,27 @@ What authority figure or situation would you like to work on today?`;
   return (
     <div className="max-w-4xl mx-auto">
       {/* Scenario Selection */}
-      {!selectedScenario && (
+      {!selectedScenario && messages.length === 0 && (
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Choose a Scenario</h2>
+          
+          {/* Free-form Chat Option */}
+          <div className="mb-6">
+            <div
+              onClick={() => startFreeChat()}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 border border-purple-200 cursor-pointer hover:shadow-lg transition-shadow text-white"
+            >
+              <h3 className="text-lg font-semibold mb-2">💬 Free Chat with Sage</h3>
+              <p className="text-purple-100 text-sm">Talk about anything on your mind - no limits, no restrictions. Sage is here to listen and support you.</p>
+              <div className="mt-3">
+                <span className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-white/20">
+                  Unlimited Conversation
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Or Choose a Specific Scenario</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {scenarios.map((scenario) => (
               <div
@@ -185,14 +297,16 @@ What authority figure or situation would you like to work on today?`;
       )}
 
       {/* Chat Interface */}
-      {selectedScenario && (
+      {messages.length > 0 && (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
           {/* Chat Header */}
           <div className="p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Sage</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Scenario: {selectedScenario.title}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {selectedScenario ? `Scenario: ${selectedScenario.title}` : 'Free Chat - Unlimited Conversation'}
+                </p>
               </div>
               <button
                 onClick={clearChat}

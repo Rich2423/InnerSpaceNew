@@ -9,7 +9,6 @@ interface AuthContextType {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
-  signInWithGoogle: () => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   updateProfile: (updates: { username?: string; avatar_url?: string }) => Promise<{ error: any }>;
 }
@@ -97,31 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signInWithGoogle = async () => {
-    console.log('🔍 Starting Google OAuth sign-in...');
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      
-      console.log('🔍 Google OAuth response:', { data, error });
-      
-      if (error) {
-        console.error('❌ Google OAuth error:', error);
-        return { error };
-      }
-      
-      console.log('✅ Google OAuth initiated successfully');
-      return { error: null };
-    } catch (err) {
-      console.error('❌ Unexpected error during Google OAuth:', err);
-      return { error: err };
-    }
-  };
+
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -141,7 +116,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     signIn,
     signUp,
-    signInWithGoogle,
     signOut,
     updateProfile,
   };

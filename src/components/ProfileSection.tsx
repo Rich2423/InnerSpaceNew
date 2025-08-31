@@ -108,10 +108,7 @@ export default function ProfileSection() {
   const [recentEntries, setRecentEntries] = useState(getRecentEntries());
   const [favoriteQuote, setFavoriteQuote] = useState('');
   const [isEditingQuote, setIsEditingQuote] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [themeKey, setThemeKey] = useState(0);
   const [activeTab, setActiveTab] = useState('profile');
-  const [isThemeSettingsExpanded, setIsThemeSettingsExpanded] = useState(false);
 
   useEffect(() => {
     setStats(getProfileStats());
@@ -122,31 +119,6 @@ export default function ProfileSection() {
     if (savedQuote) {
       setFavoriteQuote(savedQuote);
     }
-    
-    // Force light mode to match the ClientThemeProvider
-    localStorage.removeItem('innerspace_theme');
-    
-    // Always start in light mode
-    const shouldBeDark = false;
-    setIsDarkMode(shouldBeDark);
-    console.log('ProfileSection - Forcing light mode, setting isDarkMode to:', shouldBeDark);
-
-    // Listen for theme changes to sync state
-    const handleThemeChange = () => {
-      const currentTheme = localStorage.getItem('innerspace_theme');
-      const shouldBeDark = currentTheme === 'dark';
-      setIsDarkMode(shouldBeDark);
-      console.log('ProfileSection - Synced isDarkMode to:', shouldBeDark);
-    };
-
-    window.addEventListener('innerspace-theme-change', handleThemeChange);
-    
-    // No longer directly manipulate document.documentElement.classList here
-    // This is now handled by the ThemeProvider in layout.tsx
-    
-    return () => {
-      window.removeEventListener('innerspace-theme-change', handleThemeChange);
-    };
   }, []);
 
   const handleSaveQuote = () => {
@@ -154,37 +126,7 @@ export default function ProfileSection() {
     setIsEditingQuote(false);
   };
 
-  const handleThemeToggle = () => {
-    const newTheme = !isDarkMode;
-    
-    console.log('Theme toggle called - current isDarkMode:', isDarkMode);
-    console.log('Theme toggle - newTheme will be:', newTheme);
-    
-    // Update localStorage first
-    localStorage.setItem('innerspace_theme', newTheme ? 'dark' : 'light');
-    
-    // Update state immediately
-    setIsDarkMode(newTheme);
-    
-    console.log('Theme toggle:', { newTheme, isDarkMode });
-    console.log('Setting localStorage to:', newTheme ? 'dark' : 'light');
-    
-    // Apply classes to DOM
-    if (newTheme) {
-      document.documentElement.classList.add('dark');
-      document.body.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.body.classList.remove('dark');
-    }
-    
-    // Dispatch custom event for ThemeProvider
-    window.dispatchEvent(new CustomEvent('innerspace-theme-change', { detail: { newTheme } }));
-    console.log('Dispatched theme change event with newTheme:', newTheme);
 
-    // Force a re-render
-    setThemeKey(prevKey => prevKey + 1);
-  };
 
   // Debug: Check authentication state
   console.log('ProfileSection - User:', user);
@@ -262,7 +204,7 @@ export default function ProfileSection() {
   }
 
   return (
-    <div className="space-y-6" key={themeKey}>
+            <div className="space-y-6">
       {/* Profile Header */}
       <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-6 text-white">
         <div className="flex items-center justify-between">
@@ -436,47 +378,7 @@ export default function ProfileSection() {
                 )}
               </div>
 
-              {/* Theme Settings */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Theme Settings</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Choose your preferred appearance</p>
-                  </div>
-                  <button
-                    onClick={() => setIsThemeSettingsExpanded(!isThemeSettingsExpanded)}
-                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                  >
-                    {isThemeSettingsExpanded ? '−' : '+'}
-                  </button>
-                </div>
-                
-                {isThemeSettingsExpanded && (
-                  <div className="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium text-gray-800 dark:text-white">Dark Mode</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300">Switch between light and dark themes</div>
-                      </div>
-                      <button
-                        onClick={handleThemeToggle}
-                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          isDarkMode ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            isDarkMode ? 'translate-x-6' : 'translate-x-1'
-                          }`}
-                        />
-                      </button>
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      Current theme: {isDarkMode ? 'Dark Mode 🌙' : 'Light Mode ☀️'}
-                    </div>
-                  </div>
-                )}
-              </div>
+
             </div>
           )}
 

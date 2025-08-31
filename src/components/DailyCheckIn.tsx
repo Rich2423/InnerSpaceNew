@@ -90,7 +90,7 @@ export default function DailyCheckIn() {
         <h3 className="text-lg font-medium text-gray-700 mb-3">Reflection</h3>
         <p className="text-sm text-gray-600 mb-3 italic">"{question}"</p>
         <textarea
-          className="w-full min-h-[80px] rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-none"
+          className="w-full min-h-[80px] rounded-lg border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent resize-none text-gray-800 placeholder-gray-500 writing-content"
           value={reflection}
           onChange={(e) => setReflection(e.target.value)}
           placeholder="Share your thoughts..."
@@ -101,13 +101,13 @@ export default function DailyCheckIn() {
       <button
         className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
           saved
-            ? 'bg-green-100 text-green-700 border border-green-200'
-            : selectedMood && reflection
+            ? 'bg-green-500 text-white border border-green-400'
+            : (selectedMood || reflection.trim())
             ? 'bg-blue-600 text-white hover:bg-blue-700'
-            : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-gray-600 text-gray-300 cursor-not-allowed'
         }`}
         onClick={handleSave}
-        disabled={!selectedMood || !reflection || saved}
+        disabled={(!selectedMood && !reflection.trim()) || saved}
         type="button"
       >
         {saved ? '✓ Check-in saved!' : 'Save Check-in'}
